@@ -1,3 +1,4 @@
+🇧🇷 Português | [🇺🇸 English](README.en.md)
 # Eye Cat v3.2
 
 > Detecção e segmentação em tempo real de gatos filhotes em uma câmera RTSP, com alerta de "fuga de gato".
