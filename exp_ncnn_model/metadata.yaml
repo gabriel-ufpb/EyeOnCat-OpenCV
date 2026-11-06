@@ -1,0 +1,20 @@
+description: Ultralytics YOLO26s-seg model trained on /datasets/dataset-accfd92b/data.yaml
+author: Ultralytics
+date: '2026-08-12T10:14:49.002152-03:00'
+version: 8.4.108
+license: AGPL-3.0 License (https://ultralytics.com/license)
+docs: https://docs.ultralytics.com
+stride: 32
+task: segment
+head: Segment26
+batch: 1
+imgsz:
+- 640
+- 640
+names:
+  0: f
+args:
+  batch: 1
+  quantize: null
+channels: 3
+end2end: false
