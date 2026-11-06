@@ -108,13 +108,16 @@ Ao encerrar o programa (tecla 'q' ou ESC), ele gera automaticamente um relatóri
 
 O objetivo é poder olhar depois como foi o comportamento dos gatos ao longo do dia/noite, quando eles saíam mais da caixa, etc.
 
+## Demonstração
+
+> ```html
+> <video src="https://github.com/gabriel-ufpb/EyeOnCat-OpenCV/blob/main/video.mp4" controls width="600"></video>
+> ```
+
 ## Estrutura do repositório
 
 ```
 .
-├── docs/
-│   ├── contexto.txt        # anotações/contexto do projeto
-│   └── main.cpp            # versão anterior/alternativa do código
 ├── exp_ncnn_model/
 │   ├── metadata.yaml
 │   ├── model.ncnn.bin       # pesos do modelo treinado
@@ -127,20 +130,80 @@ O objetivo é poder olhar depois como foi o comportamento dos gatos ao longo do 
 └── prints/                  # capturas de tela / fotos salvas pelo programa
 ```
 
-## Dependências e como rodar
+## Dependências
 
-- OpenCV (versão 5, usa o módulo `geometry` para `contourArea`/`approxPolyDP`)
-- NCNN, compilado com suporte a Vulkan
-- Driver Vulkan para a GPU (ex: `vulkan-radeon` ou `amdvlk` para AMD no Linux)
-- FFmpeg (para o OpenCV conseguir abrir o stream RTSP)
-- Compilador C++ com suporte a C++17 ou superior
+- **OpenCV** (versão 5 — usa o módulo `geometry` para `contourArea`/`approxPolyDP`)
+- **NCNN**, compilado com suporte a Vulkan
+- **Vulkan SDK** + driver Vulkan da GPU (ex: `vulkan-radeon` ou `amdvlk` para AMD no Linux)
+- **FFmpeg** (para o OpenCV conseguir abrir o stream RTSP)
+- **CMake** (3.16 ou superior) e um compilador com suporte a C++17
 
-Antes de rodar, ajuste em `mainT.cpp` o endereço da câmera:
+> ⚠️ Ajustar com as versões exatas usadas no desenvolvimento, se quiser deixar mais preciso.
+
+## Compilando do zero
+
+O projeto usa **CMake**. O `CMakeLists.txt` está na raiz do repositório, junto com o `mainT.cpp`.
+
+### 1. Instale as dependências do sistema
+
+No Arch Linux, por exemplo:
+
+```bash
+sudo pacman -S cmake opencv ffmpeg vulkan-headers vulkan-icd-loader vulkan-radeon vulkan-tools
+```
+
+Troque `vulkan-radeon` pelo pacote do driver Vulkan da sua GPU (AMD, Intel, NVIDIA etc.), e `opencv` caso sua distro não tenha o OpenCV 5 nos repositórios oficiais (nesse caso, compile o OpenCV a partir do código-fonte).
+
+Verifique se o Vulkan está funcionando corretamente antes de prosseguir:
+
+```bash
+vulkaninfo
+```
+
+### 2. Compile o NCNN com suporte a Vulkan
+
+A maioria das distros não empacota o NCNN, então normalmente é preciso compilar ele mesmo a partir do repositório oficial:
+
+```bash
+git clone https://github.com/Tencent/ncnn.git
+cd ncnn
+git submodule update --init
+mkdir build && cd build
+cmake -DNCNN_VULKAN=ON -DCMAKE_BUILD_TYPE=Release ..
+make -j$(nproc)
+make install
+```
+
+Isso vai gerar uma pasta `install/` dentro de `build/`, com os headers e as bibliotecas do NCNN já prontos para outros projetos usarem — é esse caminho que vamos apontar para o nosso `CMakeLists.txt` no próximo passo.
+
+### 3. Compile o programa
+
+Na raiz deste repositório (onde está o `mainT.cpp` e o `CMakeLists.txt`):
+
+```bash
+cmake -B build -DCMAKE_BUILD_TYPE=Release \
+  -Dncnn_DIR=/caminho/para/ncnn/build/install/lib/cmake/ncnn
+cmake --build build -j$(nproc)
+```
+
+Troque `/caminho/para/ncnn/build/install` pelo caminho real de onde você compilou/instalou o NCNN no passo anterior. Se o CMake conseguir achar o NCNN sozinho (por exemplo, se ele tiver sido instalado em `/usr/local`), a flag `-Dncnn_DIR=...` pode ser omitida.
+
+Ao final, o binário compilado fica em `build/eye_cat_v3`.
+
+### 4. Configure e rode
+
+Antes de rodar, ajuste em `mainT.cpp` o endereço da câmera e recompile:
 
 ```cpp
 static const char* RTSP_URL = "rtsp://usuario:senha@IP_LOCAL:554/onvif1";
 ```
 
+Garanta também que a pasta `exp_ncnn_model/` (com `model.ncnn.param` e `model.ncnn.bin`) esteja no mesmo diretório de onde o binário será executado.
+
+```bash
+cd build
+./eye_cat_v3
+```
 ## Controles durante a execução
 
 | Tecla | Ação |
