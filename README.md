@@ -111,7 +111,7 @@ O objetivo é poder olhar depois como foi o comportamento dos gatos ao longo do 
 ## Demonstração
 
 
-<video src="https://github.com/user-attachments/assets/a90e9031-0930-4c30-8767-e6e01c1aaf38" controls width="600"></video>
+https://github.com/user-attachments/assets/a90e9031-0930-4c30-8767-e6e01c1aaf38
 
 
 ## Estrutura do repositório
