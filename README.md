@@ -109,10 +109,7 @@ Ao encerrar o programa (tecla 'q' ou ESC), ele gera automaticamente um relatóri
 O objetivo é poder olhar depois como foi o comportamento dos gatos ao longo do dia/noite, quando eles saíam mais da caixa, etc.
 
 ## Demonstração
-
-> ```html
-> <video src="https://github.com/gabriel-ufpb/EyeOnCat-OpenCV/blob/main/video.mp4" controls width="600"></video>
-> ```
+ ```html <video src="https://github.com/gabriel-ufpb/EyeOnCat-OpenCV/blob/main/video.mp4" controls width="600"></video>```
 
 ## Estrutura do repositório
 
