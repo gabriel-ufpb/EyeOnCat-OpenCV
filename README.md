@@ -23,13 +23,13 @@ Quando chegou, notei que ela já tinha um software próprio, o "YooSee", que eu 
 
 Posicionei ela em uma grade que ficava em cima da caixa dos gatos filhotes, dessa forma tinha uma visão completa de todos os gatos e da região exterior da caixa. Conectei um powerbank de 10.000mAh que conseguia alimentá-la por um período de tempo próximo de 24 horas.
 
-Com isso, tinha todo o hardware necessário para o programa funcionar e podia começar a trabalhar no software — aí que veio o primeiro obstáculo.
+Com isso, tinha todo o hardware necessário para o programa funcionar e podia começar a trabalhar no software, aí que veio o primeiro obstáculo.
 
 ## Desafios e escolha da abordagem
 
 Como você pode ver em algumas imagens do dataset, os gatos ficavam muito em cima uns dos outros, eram 6 gatos no total. Minha ideia inicial era tocar um alarme toda vez que o programa detectasse uma média de menos de 6 gatos na caixa por um período X, mas se um gato estivesse dormindo embaixo de outros gatos, ficando completamente invisível pela câmera, o programa poderia classificar isso como uma falsa fuga.
 
-Outro problema que eu previ que aconteceria seria que, quando os gatos ficassem dormindo emaranhados, um por cima dos outros, ficaria muito difícil para os modelos convencionais de OpenCV identificar os gatos. Os modelos de Bounding Boxes, que são extremamente comuns, não servem bem nesse caso, uma vez que não dá para selecionar uma caixa que contenha apenas um gato, e muitas vezes o gato não aparecia por completo na câmera — aparecia só o rabo, ou só a cabeça — e eu sabia que um modelo de Bounding Boxes não seria o suficiente.
+Outro problema que eu previ que aconteceria seria que, quando os gatos ficassem dormindo emaranhados, um por cima dos outros, ficaria muito difícil para os modelos convencionais de OpenCV identificar os gatos. Os modelos de Bounding Boxes, que são extremamente comuns, não servem bem nesse caso, uma vez que não dá para selecionar uma caixa que contenha apenas um gato, e muitas vezes o gato não aparecia por completo na câmera aparecia só o rabo, ou só a cabeça e eu sabia que um modelo de Bounding Boxes não seria o suficiente.
 
 Eu testei modelos já treinados de Bounding Boxes e não consegui fazer nenhum funcionar para a minha situação: muitos deles detectavam mais de 10 gatos ou nenhum gato, e mesmo os modelos de segmentação não estavam funcionando. Passei muito tempo tentando usar um modelo já treinado, até que percebi que seria melhor eu mesmo treinar um modelo apenas para a minha situação.
 
