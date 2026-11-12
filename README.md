@@ -139,7 +139,6 @@ https://github.com/user-attachments/assets/a90e9031-0930-4c30-8767-e6e01c1aaf38
 - **FFmpeg** (para o OpenCV conseguir abrir o stream RTSP)
 - **CMake** (3.16 ou superior) e um compilador com suporte a C++17
 
-> ⚠️ Ajustar com as versões exatas usadas no desenvolvimento, se quiser deixar mais preciso.
 
 ## Compilando do zero
 
